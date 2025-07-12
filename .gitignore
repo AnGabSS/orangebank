@@ -1,0 +1,107 @@
+## Arquivo .gitignore para projeto .NET (OrangeBank)
+
+# Diretórios de build e publicação
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Pp]ublish/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+
+# Arquivos de usuário
+*.user
+*.suo
+*.userprefs
+*.userosscache
+*.sln.docstates
+
+# Arquivos de IDE
+.vs/
+.idea/
+*.vscode/
+*.swp
+*.swo
+
+# Dependências
+[Nn]u[Gg]et/
+packages/
+*.nupkg
+.nuget/
+
+# Ferramentas
+tools/
+!tools/packages.config
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.log
+*.vspscc
+*.vssscc
+*.pidb
+*.log
+*.sass-cache
+
+# Arquivos de teste
+TestResult.xml
+*.trx
+*.VisualState.xml
+
+# Banco de dados local
+*.mdf
+*.ldf
+*.sdf
+
+# Backups
+*.bak
+*.gho
+*.ori
+*.orig
+*.bkp
+
+# Azure
+*.azurePubxml
+*.pubxml
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# VS Code
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Rider
+.idea/
+*.sln.iml
+
+# MacOS
+.DS_Store
+
+# Arquivos específicos do projeto
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Private.json
+
+# Arquivos de configuração sensíveis
+*.secret
+*.private
+*.env
+*.env.local
+
+# Arquivos de migração do Entity Framework (se aplicável)
+Migrations/
+
+# Arquivos de cache do Roslyn
+*.cache
