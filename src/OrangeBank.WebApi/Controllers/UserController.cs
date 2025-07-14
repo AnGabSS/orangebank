@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OrangeBank.Application.Services;
 using OrangeBank.Core.Domain.Interfaces;
 using OrangeBank.WebApi.Models;
@@ -19,7 +20,6 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
-        Console.WriteLine("Acessou o Endpoint de registrar usuário!");
         try
         {
             var user = await _userService.RegisterUserAsync(
@@ -39,6 +39,7 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpGet("{userId:guid}")]
     public async Task<IActionResult> GetById(Guid userId)
     {
