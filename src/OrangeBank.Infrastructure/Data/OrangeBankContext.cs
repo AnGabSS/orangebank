@@ -22,5 +22,14 @@ public class OrangeBankContext : DbContext
             entity.Property(u => u.Password).IsRequired().HasMaxLength(255);
             entity.Property(u => u.CreatedAt).HasDefaultValue(DateTime.Now);
         });
+        modelBuilder.Entity<CheckingAccount>(entity =>
+        {
+            entity.HasKey(u => u.Id);
+            entity.HasIndex(ca => ca.AccountNumber).IsUnique();
+            entity.Property(ca => ca.UserId).IsRequired();
+            entity.HasIndex(ca => ca.UserId).IsUnique();
+            entity.Property(ca => ca.CreatedAt).HasDefaultValue(DateTime.Now);
+            entity.Property(ca => ca.IsActive).HasDefaultValue(true);
+        });
     }
 }
