@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrangeBank.Core.Tests", "tests\OrangeBank.Core.Tests\OrangeBank.Core.Tests.csproj", "{59E3FB05-382A-4CFE-AB18-C8966C872FA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrangeBank.Application.Tests", "tests\OrangeBank.Application.Tests\OrangeBank.Application.Tests.csproj", "{27EDC52B-C515-493B-B11E-402069014D66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{59E3FB05-382A-4CFE-AB18-C8966C872FA1}.Release|x64.Build.0 = Release|Any CPU
 		{59E3FB05-382A-4CFE-AB18-C8966C872FA1}.Release|x86.ActiveCfg = Release|Any CPU
 		{59E3FB05-382A-4CFE-AB18-C8966C872FA1}.Release|x86.Build.0 = Release|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Debug|x64.Build.0 = Debug|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Debug|x86.Build.0 = Debug|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Release|x64.ActiveCfg = Release|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Release|x64.Build.0 = Release|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Release|x86.ActiveCfg = Release|Any CPU
+		{27EDC52B-C515-493B-B11E-402069014D66}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,5 +111,6 @@ Global
 		{07223D54-C82C-4EC0-A04B-17205C0C5895} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{20CED8C1-0331-4512-A53E-ADB674B3630F} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{59E3FB05-382A-4CFE-AB18-C8966C872FA1} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{27EDC52B-C515-493B-B11E-402069014D66} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

@@ -10,8 +10,10 @@ namespace OrangeBank.Core.Domain.Interfaces
     public interface ICheckingAccountRepository
     {
         Task<CheckingAccount?> GetByIdAsync(Guid id);
-        Task<CheckingAccount[]?> GetAllByUserIdAsync(Guid userId);
-        Task AddAsync(CheckingAccount user);
-        Task UpdateAsync(CheckingAccount user);
+        Task<CheckingAccount?> GetByAccountNumberAync(string accountNumber);
+        Task<Boolean> AccountNumberExists(string accountNumber);
+        Task<CheckingAccount?> GetByUserIdAsync(Guid userId);
+        Task AddAsync(CheckingAccount account);
+        Task UpdateAsync(CheckingAccount account);
     }
 }
