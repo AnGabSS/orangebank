@@ -8,6 +8,7 @@ public class OrangeBankContext : DbContext
     public OrangeBankContext(DbContextOptions<OrangeBankContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<CheckingAccount> CheckingAccounts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,7 +25,7 @@ public class OrangeBankContext : DbContext
         });
         modelBuilder.Entity<CheckingAccount>(entity =>
         {
-            entity.HasKey(u => u.Id);
+            entity.HasKey(ca => ca.Id);
             entity.HasIndex(ca => ca.AccountNumber).IsUnique();
             entity.Property(ca => ca.UserId).IsRequired();
             entity.HasIndex(ca => ca.UserId).IsUnique();
