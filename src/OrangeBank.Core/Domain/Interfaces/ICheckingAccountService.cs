@@ -9,10 +9,10 @@ namespace OrangeBank.Core.Domain.Interfaces
 {
     public interface ICheckingAccountService
     {
-        Task<User> RegisterCheckingAccountAscync(string name, string email, string cpf, string phoneNumber, DateOnly birthDate, string password);
-        Task ChangePasswordAsync(Guid userId, string currentPassword, string newPassword);
-        Task<User?> GetUserByIdAsync(Guid userId);
-        Task RequestPasswordResetAsync(string email);
-        Task<string?> AuthenticateUserAsync(string email, string password);
+        Task<CheckingAccount> RegisterAscync(Guid userId, string accountNumber);
+        Task<User?> GetByIdAsync(Guid accountId);
+        Task<CheckingAccount[]> GetByUserIdAsync(Guid userId);
+        Task<CheckingAccount> Deposit(Guid userId, decimal amount);
+        Task<CheckingAccount> WithDraw(Guid userId, decimal amount);
     }
 }
