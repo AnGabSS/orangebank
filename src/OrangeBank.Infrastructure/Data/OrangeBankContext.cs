@@ -8,7 +8,7 @@ public class OrangeBankContext : DbContext
     public OrangeBankContext(DbContextOptions<OrangeBankContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
-    public DbSet<CheckingAccount> CheckingAccounts { get; set; }
+    public DbSet<CheckingAccount> CheckingAccount { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

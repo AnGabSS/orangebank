@@ -59,9 +59,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICheckingAccountRepository, CheckingAccountRepository>();
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CheckingAccountService>();
 builder.Services.AddControllers();
 
 
@@ -70,7 +73,6 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.MapControllers();
 // Pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -102,7 +104,7 @@ app.UseAuthorization();
 //.WithName("GetWeatherForecast");
 
 app.MapGet("/test", () => { return "API FUNCIONANDO"; });
-
+app.MapControllers();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

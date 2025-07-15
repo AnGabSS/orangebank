@@ -21,34 +21,35 @@ namespace OrangeBank.Infrastructure.Repositories
 
         public async Task<bool> AccountNumberExists(string accountNumber)
         {
-            if (await _context.CheckingAccounts.SingleOrDefaultAsync(ca => ca.AccountNumber == accountNumber) == null) {
+            if (await _context.CheckingAccount.SingleOrDefaultAsync(ca => ca.AccountNumber == accountNumber) == null) {
                 return false;
             } else { return true; }
         }
 
         public async Task AddAsync(CheckingAccount account)
         {
-            await _context.CheckingAccounts.AddAsync(account);
+            await _context.CheckingAccount.AddAsync(account);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<CheckingAccount?> GetByAccountNumberAync(string accountNumber)
+        public async Task<CheckingAccount?> GetByAccountNumberAsync(string accountNumber)
         {
-            return await _context.CheckingAccounts.SingleOrDefaultAsync(ca => ca.AccountNumber == accountNumber);
+            return await _context.CheckingAccount.SingleOrDefaultAsync(ca => ca.AccountNumber == accountNumber);
         }
 
         public async Task<CheckingAccount?> GetByIdAsync(Guid id)
         {
-            return await _context.CheckingAccounts.FindAsync(id);
+            return await _context.CheckingAccount.FindAsync(id);
         }
 
         public async Task<CheckingAccount?> GetByUserIdAsync(Guid userId)
         {
-            return await _context.CheckingAccounts.SingleOrDefaultAsync(ca => ca.UserId == userId);
+            return await _context.CheckingAccount.SingleOrDefaultAsync(ca => ca.UserId == userId);
         }
 
         public async Task UpdateAsync(CheckingAccount account)
         {
-            _context.CheckingAccounts.Update(account);
+            _context.CheckingAccount.Update(account);
             await _context.SaveChangesAsync();
         }
     }

@@ -39,7 +39,7 @@ namespace OrangeBank.WebApi.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine("Erro durante o login");
-                return StatusCode(500, new { Message = "Ocorreu um erro interno" });
+                return StatusCode(500, new { Message = "Ocorreu um erro interno: " + ex.Message });
             }
         }
     }

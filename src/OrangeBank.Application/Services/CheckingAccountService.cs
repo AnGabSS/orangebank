@@ -16,7 +16,7 @@ namespace OrangeBank.Application.Services
         }
 
 
-        public async Task<CheckingAccount> RegisterAscync(Guid userId)
+        public async Task<CheckingAccount> RegisterAsync(Guid userId)
         {
             string randomAccountNumber = RandomNumberGenerator.GenerateRandom16DigitNumber();
 
@@ -34,7 +34,7 @@ namespace OrangeBank.Application.Services
             }
 
             // If we reach the maximum attempts without finding a unique account number, throw an exception, cause the accountNumber must to be UNIQUE
-            if ( generateAccountNumberAttempts == MAX_ACCOUNT_NUMBER_GENERATION_RETRIES)
+            if (generateAccountNumberAttempts == MAX_ACCOUNT_NUMBER_GENERATION_RETRIES)
             {
                 throw new ApplicationException("Checking Account creation failed. Please try again in a few moments.");
             }
@@ -55,26 +55,37 @@ namespace OrangeBank.Application.Services
         {
             CheckingAccount account = await _repository.GetByUserIdAsync(userId);
 
-            if (account == null) {
-             throw new CheckingAccountNotFoundException("Checking account not found for the specified user ID. Please check the user ID");
+            if (account == null)
+            {
+                throw new CheckingAccountNotFoundException("Checking account not found for the specified user ID. Please check the user ID");
             }
 
             return account;
         }
 
-        public async Task<CheckingAccount> Deposit(Guid userId, decimal amount)
+        public async Task<CheckingAccount> Deposit(string accountNumber, decimal amount)
         {
-            CheckingAccount currentAccount = await this.GetByUserIdAsync(userId);
+            CheckingAccount currentAccount = await this.GetByAccountNumberAsync(accountNumber);
             currentAccount.Deposit(amount);
             await _repository.UpdateAsync(currentAccount);
             return currentAccount;
         }
 
-        public async Task<CheckingAccount> WithDraw(Guid userId, decimal amount)
+        public async Task<CheckingAccount> WithDraw(string accountNumber, decimal amount)
         {
-            CheckingAccount currentAccount = await this.GetByUserIdAsync(userId);
+            CheckingAccount currentAccount = await this.GetByAccountNumberAsync(accountNumber);
             currentAccount.Withdraw(amount);
             await _repository.UpdateAsync(currentAccount);
+            return currentAccount;
+        }
+
+        public async Task<CheckingAccount> GetByAccountNumberAsync(string accountNumber)
+        {
+            CheckingAccount currentAccount = await this.GetByAccountNumberAsync(accountNumber);
+            if (currentAccount == null)
+            {
+                throw new CheckingAccountNotFoundException("Checking account not found for the specified account number. Please check the account number");
+            }
             return currentAccount;
         }
     }
