@@ -18,7 +18,7 @@ public class Asset
 	public Asset(string code, string name, AssetType type, decimal price, decimal dailyVariation, string description, AssetRisk risk)
     {
         Id = Guid.NewGuid();
-        this.code = code;
+        this.Code = code;
         Name = name;
         Type = type;
         Price = price;

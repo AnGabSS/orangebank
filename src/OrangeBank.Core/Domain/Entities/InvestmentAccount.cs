@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OrangeJuiceBank.Core.Domain.Enums;
+﻿using OrangeJuiceBank.Core.Domain.Enums;
 
 namespace OrangeBank.Core.Domain.Entities
 {
@@ -49,7 +44,6 @@ namespace OrangeBank.Core.Domain.Entities
 
         protected override bool CanWithdraw(decimal amount)
         {
-            // Verifica se há ordens pendentes
             bool hasPendingOrders = Portfolio.Any(p => p.Orders.Any(o => o.Status == OrderStatus.Pending));
 
             return !hasPendingOrders && Balance >= amount;
