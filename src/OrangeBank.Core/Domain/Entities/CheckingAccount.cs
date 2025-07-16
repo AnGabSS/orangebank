@@ -9,7 +9,6 @@ namespace OrangeBank.Core.Domain.Entities
     public class CheckingAccount : Account
     {
         private const decimal DailyWithdrawalLimit = 5000m;
-        private Guid guid;
 
         public decimal DailyWithdrawn { get; private set; }
         public DateTime LastWithdrawalDate { get; private set; }
