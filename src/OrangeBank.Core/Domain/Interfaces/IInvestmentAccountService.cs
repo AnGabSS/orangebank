@@ -13,7 +13,5 @@ namespace OrangeBank.Core.Domain.Interfaces
         Task<InvestmentAccount?> GetByIdAsync(Guid accountId);
         Task<InvestmentAccount?> GetByUserIdAsync(Guid userId);
         Task<InvestmentAccount?> GetByAccountNumberAsync(string accountNumber);
-        Task<InvestmentAccount> Invest(string accountNumber, Asset asset, int quantity);
-        Task<InvestmentAccount> WithDraw(string accountNumber, Asset asset, int quantity);
     }
 }
