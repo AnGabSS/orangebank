@@ -140,17 +140,6 @@ namespace OrangeBank.Application.Tests.Services
         }
 
         [Fact]
-        public async Task GetByAccountNumberAsync_ShouldReturnNull_WhenNotFound()
-        {
-            _mockRepository.Setup(r => r.GetByAccountNumberAsync(It.IsAny<string>()))
-                           .ReturnsAsync((CheckingAccount)null);
-
-            var result = await _service.GetByAccountNumberAsync("NonExistentAccount");
-
-            Assert.Null(result);
-        }
-
-        [Fact]
         public async Task Deposit_ShouldIncreaseAccountBalanceAndSave()
         {
             var initialBalance = 100m;
@@ -179,7 +168,7 @@ namespace OrangeBank.Application.Tests.Services
             var exception = await Assert.ThrowsAsync<CheckingAccountNotFoundException>(
                 async () => await _service.Deposit(_mockAccountNumber, 100)); 
 
-            Assert.Equal($"Checking account not found for account number: {_mockAccountNumber}.", exception.Message);
+            Assert.Equal($"Checking account not found for the specified account number. Please check the account number", exception.Message);
             _mockRepository.Verify(r => r.UpdateAsync(It.IsAny<CheckingAccount>()), Times.Never);
         }
 
@@ -228,7 +217,7 @@ namespace OrangeBank.Application.Tests.Services
             var exception = await Assert.ThrowsAsync<CheckingAccountNotFoundException>(
                 async () => await _service.WithDraw(_mockAccountNumber, 100)); 
 
-            Assert.Equal($"Checking account not found for account number: {_mockAccountNumber}.", exception.Message);
+            Assert.Equal($"Checking account not found for the specified account number. Please check the account number", exception.Message);
             _mockRepository.Verify(r => r.UpdateAsync(It.IsAny<CheckingAccount>()), Times.Never);
         }
     }

@@ -49,12 +49,6 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet()]
-    public async Task<IActionResult> test()
-    {
-        return Ok("Hello world");
-    }
-
     [HttpPost("{userId:guid}/change-password")]
     public async Task<IActionResult> ChangePassword(Guid userId, [FromBody] ChangePasswordRequest request)
     {

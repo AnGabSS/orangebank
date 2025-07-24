@@ -9,15 +9,14 @@ namespace OrangeBank.Core.Domain.Tests.Entities
     {
         private readonly Guid _testUserId = Guid.NewGuid();
         private const string _testAccountNumber = "12345-6";
-        private const decimal DailyWithdrawalLimit = 5000m; // Acessível para testes
+        private const decimal DailyWithdrawalLimit = 5000m; 
 
         [Fact]
         public void CheckingAccount_Constructor_InitializesCorrectly()
         {
-            // Arrange & Act
+           
             var account = new CheckingAccount(_testUserId, _testAccountNumber);
 
-            // Assert
             account.Id.Should().NotBeEmpty();
             account.UserId.Should().Be(_testUserId);
             account.AccountNumber.Should().Be(_testAccountNumber);
@@ -162,13 +161,10 @@ namespace OrangeBank.Core.Domain.Tests.Entities
             var account = new CheckingAccount(_testUserId, _testAccountNumber);
             account.Deposit(15000);
 
-            account.Withdraw(3000); // Saque no "dia 1"
+            account.Withdraw(3000); 
             account.DailyWithdrawn.Should().Be(3000);
             account.LastWithdrawalDate.Should().Be(DateTime.UtcNow.Date);
 
-            // Simula que a data da última retirada é de um dia anterior.
-            // Isso geralmente seria feito com um mock de IDateTimeProvider.
-            // Para este teste unitário, usamos reflexão para forçar o estado para demonstração.
             typeof(CheckingAccount)
                 .GetProperty(nameof(CheckingAccount.LastWithdrawalDate))
                 .SetValue(account, DateTime.UtcNow.Date.AddDays(-1));
@@ -176,7 +172,6 @@ namespace OrangeBank.Core.Domain.Tests.Entities
                 .GetProperty(nameof(CheckingAccount.DailyWithdrawn))
                 .SetValue(account, 4000m);
 
-            // Atuamos no "novo dia"
             account.Withdraw(4500);
 
             account.Balance.Should().Be(15000 - 3000 - 4500);

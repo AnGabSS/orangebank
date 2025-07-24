@@ -63,6 +63,16 @@ namespace OrangeBank.Application.Services
             return account;
         }
 
+        public async Task<CheckingAccount> GetByAccountNumberAsync(string accountNumber)
+        {
+            CheckingAccount currentAccount = await _repository.GetByAccountNumberAsync(accountNumber);
+            if (currentAccount == null)
+            {
+                throw new CheckingAccountNotFoundException("Checking account not found for the specified account number. Please check the account number");
+            }
+            return currentAccount;
+        }
+
         public async Task<CheckingAccount> Deposit(string accountNumber, decimal amount)
         {
             CheckingAccount currentAccount = await this.GetByAccountNumberAsync(accountNumber);
@@ -79,14 +89,6 @@ namespace OrangeBank.Application.Services
             return currentAccount;
         }
 
-        public async Task<CheckingAccount> GetByAccountNumberAsync(string accountNumber)
-        {
-            CheckingAccount currentAccount = await this.GetByAccountNumberAsync(accountNumber);
-            if (currentAccount == null)
-            {
-                throw new CheckingAccountNotFoundException("Checking account not found for the specified account number. Please check the account number");
-            }
-            return currentAccount;
-        }
+
     }
 }

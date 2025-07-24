@@ -2,21 +2,22 @@ namespace OrangeBank.WebApi.Models;
 
 public class RegisterUserRequest
 {
-    public string Name { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string Cpf { get; set; } = string.Empty;
-    public string PhoneNumber { get; set; } = string.Empty;
-    public DateOnly BirthDate { get; set; }
-    public string Password { get; set; } = string.Empty;
+    public required string Name { get; set; }
+    public required string Email { get; set; }
+    public required string Cpf { get; set; }
+    public required string PhoneNumber { get; set; }
+    public required DateOnly BirthDate { get; set; }
+    public required string Password { get; set; } 
 }
 
 public class ChangePasswordRequest
 {
-    public string CurrentPassword { get; set; } = string.Empty;
-    public string NewPassword { get; set; } = string.Empty;
+    public required string CurrentPassword { get; set; }
+    public required string NewPassword { get; set; }
 }
 
 public class PasswordResetRequest
 {
-    public string Email { get; set; } = string.Empty;
+    public required string Email { get; set; }
 }
+
