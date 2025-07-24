@@ -60,11 +60,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICheckingAccountRepository, CheckingAccountRepository>();
+builder.Services.AddScoped<IInvestmentAccountRepository, InvestmentAccountRepository>();
 builder.Services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IInvestmentAccountService, InvestmentAccountService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CheckingAccountService>();
+builder.Services.AddScoped<InvestmentAccountService>();
 builder.Services.AddControllers();
 
 

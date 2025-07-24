@@ -18,7 +18,7 @@ public class CheckingAccountController : ControllerBase
     }
 
     [HttpPost()]
-    public async Task<IActionResult> RegisterAsync([FromBody] RegisterCheckingAccountDTO body)
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterAccountRequest body)
     {
         try
         {

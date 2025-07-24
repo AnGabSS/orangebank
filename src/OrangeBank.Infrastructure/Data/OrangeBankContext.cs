@@ -9,6 +9,7 @@ public class OrangeBankContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<CheckingAccount> CheckingAccount { get; set; }
+    public DbSet<InvestmentAccount> InvestmentAccount { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,6 +32,15 @@ public class OrangeBankContext : DbContext
             entity.HasIndex(ca => ca.UserId).IsUnique();
             entity.Property(ca => ca.CreatedAt).HasDefaultValue(DateTime.Now);
             entity.Property(ca => ca.IsActive).HasDefaultValue(true);
+        });
+        modelBuilder.Entity<InvestmentAccount>(entity =>
+        {
+            entity.HasKey(ia => ia.Id);
+            entity.HasIndex(ia => ia.AccountNumber).IsUnique();
+            entity.Property(ia => ia.UserId).IsRequired();
+            entity.HasIndex(ia => ia.UserId).IsUnique();
+            entity.Property(ia => ia.CreatedAt).HasDefaultValue(DateTime.Now);
+            entity.Property(ia => ia.IsActive).HasDefaultValue(true);
         });
     }
 }

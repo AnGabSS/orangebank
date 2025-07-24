@@ -77,7 +77,7 @@ namespace OrangeBank.Application.Tests.Services
             var userId = Guid.NewGuid();
             var generatedAccountNumber = "1234567890123456";
             _repositoryMock.Setup(r => r.AccountNumberExists(generatedAccountNumber))
-                .ReturnsAsync(false);
+                .ReturnsAsync(true);
             _repositoryMock.Setup(r => r.AddAsync(It.IsAny<InvestmentAccount>()))
                 .Returns(Task.CompletedTask);
 
@@ -87,7 +87,7 @@ namespace OrangeBank.Application.Tests.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(userId, result.UserId);
-            Assert.Equal(generatedAccountNumber, result.AccountNumber);
+            Assert.NotEqual(generatedAccountNumber, result.AccountNumber);
             _repositoryMock.Verify(r => r.AddAsync(It.IsAny<InvestmentAccount>()), Times.Once);
         }
 

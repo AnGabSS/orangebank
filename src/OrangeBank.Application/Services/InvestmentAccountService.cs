@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OrangeBank.Core.Domain.Entities;
+﻿using OrangeBank.Core.Domain.Entities;
 using OrangeBank.Core.Domain.Interfaces;
 
 namespace OrangeBank.Application.Services
@@ -11,8 +6,6 @@ namespace OrangeBank.Application.Services
     public class InvestmentAccountService : IInvestmentAccountService
     {
         IInvestmentAccountRepository _repository;
-        ICheckingAccountService _checkingAccountService;
-
         public InvestmentAccountService(IInvestmentAccountRepository repository)
         {
             _repository = repository;
