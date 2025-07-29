@@ -1,4 +1,5 @@
 ﻿using OrangeBank.Core.Domain.Entities;
+using OrangeBank.Core.Domain.Exceptions;
 using OrangeBank.Core.Domain.Interfaces;
 
 namespace OrangeBank.Application.Services
@@ -28,6 +29,12 @@ namespace OrangeBank.Application.Services
 
         public async Task<InvestmentAccount> RegisterAsync(Guid userId)
         {
+            InvestmentAccount accountExists = await GetByUserIdAsync(userId);
+
+            if (accountExists != null)
+            {
+                throw new InvestmentAccountAlreadyExistsException("You already have an investment account registered for this user.");
+            }
             string randomAccountNumber = RandomNumberGenerator.GenerateRandom16DigitNumber();
 
             int generateAccountNumberAttempts = 0;

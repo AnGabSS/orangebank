@@ -22,19 +22,8 @@ namespace OrangeBank.WebApi.Controllers
         [HttpPost()]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterAccountRequest body)
         {
-            try
-            {
                 var account = await _service.RegisterAsync(Guid.Parse(body.UserId));
                 return CreatedAtAction(nameof(GetByAccountNumber), new { accountNumber = account.AccountNumber }, account);
-            }
-            catch (ApplicationException e)
-            {
-                return BadRequest(e.Message);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
         }
 
         [HttpGet("{accountNumber}")]

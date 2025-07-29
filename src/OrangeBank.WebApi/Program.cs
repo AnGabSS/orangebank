@@ -2,12 +2,14 @@ using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Diagnostics;
 using OrangeBank.Application.Services;
 using OrangeBank.Core.Domain.Interfaces;
 using OrangeBank.Core.Domain.Security;
 using OrangeBank.Infrastructure.Data;
 using OrangeBank.Infrastructure.Repositories;
 using OrangeBank.Infrastructure.Security;
+using OrangeBank.WebApi.ExceptionHandlers;
 using System.Text;
 
 Env.Load("../../.env");
@@ -69,6 +71,13 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CheckingAccountService>();
 builder.Services.AddScoped<InvestmentAccountService>();
 builder.Services.AddControllers();
+builder.Services.AddProblemDetails();
+
+
+// Exception Handlers
+builder.Services.AddExceptionHandler<DomainExceptionHandler>();
+builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+builder.Services.AddExceptionHandler<UnhandledExceptionHandler>(); 
 
 
 // Configuração do OpenAPI
@@ -85,6 +94,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseExceptionHandler();
 
 // Rotas (exemplo mantido)
 //var summaries = new[]
