@@ -1,7 +1,7 @@
 ﻿using System;
 using OrangeJuiceBank.Core.Domain.Enums;
 
-public class Asset
+public class Asset: IEntity
 {
 	public Guid Id { get; private set; }
 	public string Code { get; private set; }

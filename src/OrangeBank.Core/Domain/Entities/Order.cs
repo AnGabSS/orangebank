@@ -8,7 +8,7 @@ using OrangeJuiceBank.Core.Domain.Enums;
 
 namespace OrangeBank.Core.Domain.Entities;
 
-public class Order
+public class Order: IEntity
 {
     public Guid Id { get; private set; }
     public Guid PortfolioId { get; private set; }

@@ -5,41 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using OrangeJuiceBank.Core.Domain.Enums;
 
-namespace OrangeBank.Core.Domain.Entities
+namespace OrangeBank.Core.Domain.Entities;
+
+public class PortfolioItem: IEntity
 {
-    public class PortfolioItem
+    public Guid Id { get; private set; }
+    public Guid AssetId { get; private set; }
+    public Asset Asset { get; private set; }
+    public int Quantity { get; private set; }
+    public decimal AveragePrice { get; private set; }
+    public ICollection<Order> Orders { get; private set; } = new List<Order>();
+    public DateTime CreatedAt { get; private set; }
+
+    protected PortfolioItem() { }
+
+    public PortfolioItem(Guid assetId, int quantity, decimal unitPrice)
     {
-        public Guid Id { get; private set; }
-        public Guid AssetId { get; private set; }
-        public Asset Asset { get; private set; }
-        public int Quantity { get; private set; }
-        public decimal AveragePrice { get; private set; }
-        public ICollection<Order> Orders { get; private set; } = new List<Order>();
+        Id = Guid.NewGuid();
+        AssetId = assetId;
+        Quantity = quantity;
+        AveragePrice = unitPrice;
+    }
 
-        protected PortfolioItem() { }
+    public void AddOrder(Order order)
+    {
+        Orders.Add(order);
 
-        public PortfolioItem(Guid assetId, int quantity, decimal unitPrice)
+        if (order.Type == OrderType.Buy)
         {
-            Id = Guid.NewGuid();
-            AssetId = assetId;
-            Quantity = quantity;
-            AveragePrice = unitPrice;
+            Quantity += order.Quantity;
+            AveragePrice = ((AveragePrice * (Quantity - order.Quantity)) +
+                            (order.UnitPrice * order.Quantity)) / Quantity;
         }
-
-        public void AddOrder(Order order)
+        else if (order.Type == OrderType.Sell)
         {
-            Orders.Add(order);
-
-            if (order.Type == OrderType.Buy)
-            {
-                Quantity += order.Quantity;
-                AveragePrice = ((AveragePrice * (Quantity - order.Quantity)) +
-                              (order.UnitPrice * order.Quantity)) / Quantity;
-            }
-            else if (order.Type == OrderType.Sell)
-            {
-                Quantity -= order.Quantity;
-            }
+            Quantity -= order.Quantity;
         }
     }
 }
+

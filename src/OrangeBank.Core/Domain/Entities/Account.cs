@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrangeBank.Core.Domain.Entities
 {
-    public abstract class Account
+    public abstract class Account: IEntity
     {
         public Guid Id { get; protected set; }
         public string AccountNumber { get; protected set; }
