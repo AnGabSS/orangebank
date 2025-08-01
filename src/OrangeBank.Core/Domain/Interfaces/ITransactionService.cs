@@ -12,6 +12,5 @@ public interface ITransactionService
     Task<IEnumerable<Transaction>> GetByDestinyAccountAsync(string destinyAccount);
     Task<IEnumerable<Transaction>> GetAllAsync();
     Task<Transaction?> GetByIdAsync(Guid transactionId);
-
+    Task<Transaction> AddInternalTransaction(Guid userId, Decimal amount);
 }
-

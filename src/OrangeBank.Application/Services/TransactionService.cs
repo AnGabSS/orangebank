@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrangeBank.Application.DTO.Transaction;
 using OrangeBank.Core.Domain.Entities;
+using OrangeBank.Core.Domain.Enums;
 using OrangeBank.Core.Domain.Interfaces;
 
 namespace OrangeBank.Application.Services;
@@ -21,6 +23,7 @@ public class TransactionService : ITransactionService
     public async Task AddAsync(Transaction transaction)
     {
         await _repository.AddAsync(transaction);
+        
     }
 
     public async Task<IEnumerable<Transaction>> GetAllAsync()

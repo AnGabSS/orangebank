@@ -89,6 +89,12 @@ namespace OrangeBank.Application.Services
             return currentAccount;
         }
 
-
+        public async Task<CheckingAccount> WithDrawByUserId(Guid userId, decimal amount)
+        {
+            CheckingAccount currentAccount = await this.GetByUserIdAsync(userId);
+            currentAccount.Withdraw(amount);
+            await _repository.UpdateAsync(currentAccount);
+            return currentAccount;
+        }
     }
 }

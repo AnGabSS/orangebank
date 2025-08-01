@@ -1,4 +1,6 @@
-﻿using OrangeBank.Core.Domain.Entities;
+﻿using System.Security.Principal;
+using OrangeBank.Core.Domain.Entities;
+using OrangeBank.Core.Domain.Enums;
 using OrangeBank.Core.Domain.Exceptions;
 using OrangeBank.Core.Domain.Interfaces;
 
@@ -7,29 +9,62 @@ namespace OrangeBank.Application.Services
     public class InvestmentAccountService : IInvestmentAccountService
     {
         IInvestmentAccountRepository _repository;
-        public InvestmentAccountService(IInvestmentAccountRepository repository)
+        ICheckingAccountService _checkingAccountService;
+        ITransactionService _transactionService;
+        public InvestmentAccountService(
+            IInvestmentAccountRepository repository, 
+            ICheckingAccountService checkingAccountService, 
+            ITransactionService transactionService)
         {
             _repository = repository;
+            _checkingAccountService = checkingAccountService;
+            _transactionService = transactionService;
         }
 
-        public async Task<InvestmentAccount?> GetByAccountNumberAsync(string accountNumber)
+        public async Task<InvestmentAccount> Deposit(string accountNumber, decimal amount)
         {
-            return await _repository.GetByAccountNumberAsync(accountNumber);
+            InvestmentAccount account = await GetByAccountNumberAsync(accountNumber);
+            account.Withdraw(amount);
+            await _repository.UpdateAsync(account);
+            return account;
         }
 
-        public async Task<InvestmentAccount?> GetByIdAsync(Guid accountId)
+        public async Task<InvestmentAccount> GetByAccountNumberAsync(string accountNumber)
         {
-            return await _repository.GetByIdAsync(accountId);
+            InvestmentAccount? account = await _repository.GetByAccountNumberAsync(accountNumber);
+            if (account == null) {
+                throw new InvestmentAccountNotFoundException("Investment account not found for the specified account number.");
+            }
+            return account;
         }
 
-        public async Task<InvestmentAccount?> GetByUserIdAsync(Guid userId)
+        public async Task<InvestmentAccount> GetByIdAsync(Guid accountId)
         {
-            return await _repository.GetByUserIdAsync(userId);
+            InvestmentAccount? account = await _repository.GetByIdAsync(accountId);
+
+            if (account == null)
+            {
+                throw new InvestmentAccountNotFoundException("Investment account not found for the specified account number.");
+            }
+            return account;
+        }
+
+        public async Task<InvestmentAccount> GetByUserIdAsync(Guid userId)
+        {
+            InvestmentAccount? account = await _repository.GetByUserIdAsync(userId);
+
+            if (account == null)
+            {
+                throw new InvestmentAccountNotFoundException("Investment account not found for the specified user.");
+            }
+
+            return account;
+            
         }
 
         public async Task<InvestmentAccount> RegisterAsync(Guid userId)
         {
-            InvestmentAccount accountExists = await GetByUserIdAsync(userId);
+            InvestmentAccount? accountExists = await GetByUserIdAsync(userId);
 
             if (accountExists != null)
             {
@@ -60,5 +95,45 @@ namespace OrangeBank.Application.Services
             await _repository.AddAsync(account);
             return account;
         }
+
+        public async Task<InvestmentAccount> WithDraw(string accountNumber, decimal amount)
+        {
+            InvestmentAccount? investmentAccount = await GetByAccountNumberAsync(accountNumber);
+            investmentAccount.Withdraw(amount);
+            await _repository.UpdateAsync(investmentAccount);
+            return investmentAccount;
+        }
+
+        public async Task<InvestmentAccount> WithDrawByUserId(Guid userId, decimal amount)
+        {
+            InvestmentAccount? investmentAccount = await GetByUserIdAsync(userId);
+            investmentAccount.Withdraw(amount);
+            await _repository.UpdateAsync(investmentAccount);
+            return investmentAccount;
+        }
+
+        public async Task<InvestmentAccount> TransferBalanceToCheckingAccount(Guid userId, decimal amount)
+        {
+
+            // Update Investment Account amount
+            await WithDraw(userId, amount);
+
+            // Update Checking Account amount
+            await _checkingAccountService.WithDrawByUserId(userId, amount);
+
+            // Register the transaction
+            Transaction transaction = new Transaction(
+                investmentAccount,
+                checkingAccount,
+                amount,
+                TransactionType.INTERNAL);
+
+            await _transactionService.AddAsync(transaction);
+
+            return investmentAccount;
+
+        }
+
+
     }
 }
